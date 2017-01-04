@@ -34,7 +34,7 @@ switch ( $action ) {
 function login() {
 
   $results = array();
-  $results['pageTitle'] = "Admin Login | Widget News";
+  $results['pageTitle'] = "Новая статья";
 
   if ( isset( $_POST['login'] ) ) {
 
@@ -99,7 +99,7 @@ function newArticle() {
 function editArticle() {
 
   $results = array();
-  $results['pageTitle'] = "Edit Article";
+  $results['pageTitle'] = "Изменить данные";
   $results['formAction'] = "editArticle";
 
   if ( isset( $_POST['saveChanges'] ) ) {
