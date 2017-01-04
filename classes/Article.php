@@ -90,6 +90,25 @@ class Article
     if ( $row ) return new Article( $row );
   }
 
+  /**
+  * Возвращаем количество всех статей 
+  *
+  * @return int|void 
+  */
+  public static function getNumPages(){
+    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+    $sql = "SELECT id FROM articles";
+    $st = $conn->prepare( $sql );
+    $st->execute();
+
+    while ( $row = $st->fetch() ) {
+      $list[] = $article;
+    }
+
+    $conn = null;
+
+    return count( $list );
+  }
 
   /**
   * Возвращает все (или диапазон) объектов статей в базе данных
@@ -99,13 +118,19 @@ class Article
   * @return Array|false Двух элементный массив: results => массив, список объектов статей; totalRows => общее количество статей
   */
 
-  public static function getList( $numRows=1000000, $order="publicationDate DESC" ) {
+  public static function getList( $numRows=100, $start=1 $order="publicationDate DESC" ) {
+    if ( $numRows < 100 ) {
+      $pages = self::getNumPages();
+      $start = $pages * $numRows - $numRows;
+    }
+    else $start = 1;
     $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
     $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles
             ORDER BY " . $order . " LIMIT :numRows";
 
     $st = $conn->prepare( $sql );
     $st->bindValue( ":numRows", $numRows, PDO::PARAM_INT );
+    // $st->bindValue( ":start", $start, PDO::PARAM_INT );
     $st->execute();
     $list = array();
 

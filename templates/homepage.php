@@ -9,7 +9,7 @@
 	<!-- Post -->
 	<article class="box post post-excerpt">
 		<header>
-			<h2><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars( $article->title);?></a></h2>
+			<h2><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars( $article->title); echo Article::getNumPages();?></a></h2>
 			<p><?php echo htmlspecialchars( $article->summary);?></p>
 		</header>
 		<div class="info">
@@ -28,19 +28,12 @@
 
 		
 		<?php } ?>
-
-		<!-- Pagination -->
 		<div class="pagination">
-			<a href="#" class="button previous">Previous Page</a>
 			<div class="pages">
-				<a href="#" class="active">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<a href="#">4</a>
-				<span>&hellip;</span>
-				<a href="#">20</a>
+		<?php for($i = 1; $i <= ceil(Article::getNumPages()/HOMEPAGE_NUM_ARTICLES); $i++){
+			echo "<a href='#' data-page='$i'>$i</a>";
+		} ?>
 			</div>
-			<a href="#" class="button next">Следующая</a>
 		</div>
 
 		<?php include "templates/include/footer.php" ?>

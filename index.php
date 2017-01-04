@@ -3,6 +3,8 @@
 require( "config.php" );
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 
+if(isset($_POST['newPage'])) $action = $_POST['newPage'];
+
 switch ( $action ) {
   case 'archive':
     archive();
@@ -15,6 +17,9 @@ switch ( $action ) {
     break;
   case 'contacts':
     require( TEMPLATE_PATH . "/contacts.php" );
+    break;
+  case 'newPage':
+    newPage();
     break;
   default:
     homepage();
@@ -39,6 +44,10 @@ function viewArticle() {
   $results['article'] = Article::getById( (int)$_GET["articleId"] );
   $results['pageTitle'] = $results['article']->title . " | Widget News";
   require( TEMPLATE_PATH . "/viewArticle.php" );
+}
+
+function newPage(){
+  
 }
 
 function homepage() {
