@@ -75,6 +75,7 @@ h1 {
 h2 {
 	font-weight: 300;
 	margin-bottom: 20px;
+	cursor: pointer;
 }
 
 h3, h4 {
