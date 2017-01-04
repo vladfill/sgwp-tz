@@ -3,7 +3,10 @@
 require( "config.php" );
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 
-if(isset($_POST['newPage'])) $action = $_POST['newPage'];
+if(isset($_POST['newPage'])){
+  $action = $_POST['newPage'];
+  $page = (int)$_POST['page']-1;
+}
 
 switch ( $action ) {
   case 'archive':
@@ -19,7 +22,7 @@ switch ( $action ) {
     require( TEMPLATE_PATH . "/contacts.php" );
     break;
   case 'newPage':
-    newPage();
+    newPage($page);
     break;
   default:
     homepage();
@@ -46,8 +49,13 @@ function viewArticle() {
   require( TEMPLATE_PATH . "/viewArticle.php" );
 }
 
-function newPage(){
-  
+function newPage($page){
+  $results = array();
+  $data = Article::getList( HOMEPAGE_NUM_ARTICLES , $page );
+  $results['articles'] = $data['results'];
+  $results['totalRows'] = $data['totalRows'];
+  $results['pageTitle'] = "Widget News";
+  require( TEMPLATE_PATH . "/newPage.php" );
 }
 
 function homepage() {

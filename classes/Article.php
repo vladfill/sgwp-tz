@@ -118,19 +118,15 @@ class Article
   * @return Array|false Двух элементный массив: results => массив, список объектов статей; totalRows => общее количество статей
   */
 
-  public static function getList( $numRows=100, $start=1 $order="publicationDate DESC" ) {
-    if ( $numRows < 100 ) {
-      $pages = self::getNumPages();
-      $start = $pages * $numRows - $numRows;
-    }
-    else $start = 1;
+  public static function getList( $numRows=100, $start=0, $order="publicationDate DESC" ) {
+    
     $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
     $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles
-            ORDER BY " . $order . " LIMIT :numRows";
+            ORDER BY " . $order . " LIMIT :start, :numRows";
 
     $st = $conn->prepare( $sql );
     $st->bindValue( ":numRows", $numRows, PDO::PARAM_INT );
-    // $st->bindValue( ":start", $start, PDO::PARAM_INT );
+    $st->bindValue( ":start", $start, PDO::PARAM_INT );
     $st->execute();
     $list = array();
 

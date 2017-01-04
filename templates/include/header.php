@@ -8,6 +8,7 @@
 	<script src="site/js/skel.min.js"></script>
 	<script src="site/js/skel-layers.min.js"></script>
 	<script src="site/js/init.js"></script>
+	<script src="site/js/ajax_pagination.js"></script>
 	<!-- <noscript> -->
 		<link rel="stylesheet" href="site/css/skel.css" />
 		<link rel="stylesheet" href="site/css/fonts.css" />

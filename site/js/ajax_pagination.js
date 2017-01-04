@@ -1,17 +1,13 @@
 $(document).ready(function(){
 
-	$(".pagination" ).load( "index.php");
+	// $(".pagination" ).load( "index.php");
 
-	$(".pagination").on( "click", ".pagination ul li a", function (e){
+	$(".inner").on( "click", ".pagination a", function (e){
 		e.preventDefault();
+		// console.log('9aub9aubfuian');
 		var page = $(this).attr("data-page"); //возвращает номер страницы
 
-		$(this).parent().addClass('active');
-		$(".pagination").load("index.php", {"page":page, "newPage": "newPage"}, function(){
-			// Присваиваем класс active при клике
-			var sPage = $('.pagination ul li a[data-page="' + page + '"]');
-			sPage.parent().addClass('active');
-		});
+		// $(this).parent().addClass('active');
+		$(".inner").load("index.php", {"page":page, "newPage": "newPage"});
 	});
-
 });
