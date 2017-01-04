@@ -146,15 +146,15 @@ function listArticles() {
   $data = Article::getList();
   $results['articles'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
-  $results['pageTitle'] = "All Articles";
+  $results['pageTitle'] = "Все статьи";
 
   if ( isset( $_GET['error'] ) ) {
-    if ( $_GET['error'] == "articleNotFound" ) $results['errorMessage'] = "Error: Article not found.";
+    if ( $_GET['error'] == "articleNotFound" ) $results['errorMessage'] = "Статья не найдена";
   }
 
   if ( isset( $_GET['status'] ) ) {
-    if ( $_GET['status'] == "changesSaved" ) $results['statusMessage'] = "Your changes have been saved.";
-    if ( $_GET['status'] == "articleDeleted" ) $results['statusMessage'] = "Article deleted.";
+    if ( $_GET['status'] == "changesSaved" ) $results['statusMessage'] = "Изменения сохранены";
+    if ( $_GET['status'] == "articleDeleted" ) $results['statusMessage'] = "Статья удалена";
   }
 
   require( TEMPLATE_PATH . "/admin/listArticles.php" );

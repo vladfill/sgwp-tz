@@ -2,18 +2,17 @@
 include "templates/include-admin/nav.php"; ?>
 
 
-
-<h1><?php echo $results['pageTitle']?></h1>
-
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">Добавить статью</div>
+				<div class="panel-heading"><?php echo $results['pageTitle']?></div>
 				<div class="panel-body">
 					<div class="col-md-12">	
 						<?php if ( isset( $results['errorMessage'] ) ) { ?>
-						<div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
+						<div class="alert bg-danger" role="alert">
+							<span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $results['errorMessage'] ?>
+						</div>
 						<?php } ?>
 
 

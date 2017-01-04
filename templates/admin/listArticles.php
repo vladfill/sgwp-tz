@@ -1,19 +1,22 @@
 <?php include "templates/include-admin/header.php";
 include "templates/include-admin/nav.php"; ?>
 
-<?php if ( isset( $results['errorMessage'] ) ) { ?>
-<div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
-<?php } ?>
 
-
-<?php if ( isset( $results['statusMessage'] ) ) { ?>
-<div class="statusMessage"><?php echo $results['statusMessage'] ?></div>
-<?php } ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">Статьи</div>
+				<div class="panel-heading"><?php echo $results['pageTitle']?></div>
+				<?php if ( isset( $results['errorMessage'] ) ) { ?>
+				<div class="alert bg-danger" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $results['errorMessage'] ?>
+				</div>
+				<?php } ?>
+				<?php if ( isset( $results['statusMessage'] ) ) { ?>
+				<div class="alert bg-success" role="alert">
+					<span class="glyphicon glyphicon-check"></span> <?php echo $results['statusMessage'] ?>
+				</div>
+				<?php } ?>
 				<div class="panel-body">
 					<div class="col-md-12">
 						<?php foreach ( $results['articles'] as $article ) {?>
