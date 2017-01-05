@@ -7,18 +7,6 @@
 	<!-- Logo -->
 	<h1 id="logo"><a href="index.php">Тестовое задание</a></h1>
 
-	<div class="client">
-		<section class="box search">
-
-			<h3>Здравствуйте, admin</h3>
-			<a href="#" class="button admin_panel_button">Мой кабинет</a>
-		</section>
-
-		<section class="box search">
-			<a href="#" class="button admin_panel_button">Выход из акаунта</a>
-		</section>
-	</div>
-
 	<!-- Nav -->
 	<nav id="nav">
 		<ul>

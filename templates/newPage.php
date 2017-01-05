@@ -1,7 +1,4 @@
-<?php include "templates/include/header.php";?>
-
 <?php foreach ( $results['articles'] as $article ) { 
-
 	$date = $article->publicationDate;
 	?>
 
@@ -30,5 +27,3 @@
 			} ?>
 		</div>
 	</div>
-
-	<?php include "templates/include/footer.php" ?>
