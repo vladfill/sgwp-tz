@@ -102,7 +102,7 @@ class Article
     $st->execute();
 
     while ( $row = $st->fetch() ) {
-      $list[] = $article;
+      $list[] = $row;
     }
 
     $conn = null;
@@ -120,6 +120,7 @@ class Article
 
   public static function getList( $numRows=100, $start=0, $order="publicationDate DESC" ) {
     
+
     $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
     $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles
             ORDER BY " . $order . " LIMIT :start, :numRows";

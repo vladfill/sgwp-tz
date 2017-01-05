@@ -5,7 +5,8 @@ $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 
 if(isset($_POST['newPage'])){
   $action = $_POST['newPage'];
-  $page = (int)$_POST['page']-1;
+  $page = (int)$_POST['page'];
+  $start = $page * HOMEPAGE_NUM_ARTICLES - HOMEPAGE_NUM_ARTICLES;
 }
 
 switch ( $action ) {
@@ -22,7 +23,7 @@ switch ( $action ) {
     require( TEMPLATE_PATH . "/contacts.php" );
     break;
   case 'newPage':
-    newPage($page);
+    newPage($start);
     break;
   default:
     homepage();
