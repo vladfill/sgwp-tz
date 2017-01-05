@@ -11,8 +11,8 @@
 		</header>
 		<div class="info">
 			<span class="date">
-				<span class="month"><? echo date('M', $date)?></span> 
-				<span class="day"><? echo date('d', $date)?></span>
+				<span class="month"><?php echo date('M', $date);?></span> 
+				<span class="day"><?php echo date('d', $date);?></span>
 			</span>
 		</div>
 
