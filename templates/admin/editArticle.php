@@ -32,16 +32,12 @@ include "templates/include-admin/nav.php"; ?>
 
 							<div class="form-group">
 								<label>Описание</label>
-								<textarea  name="summary" class="form-control" rows="3">
-									<?php echo htmlspecialchars( $results['article']->summary )?>
-								</textarea>
+								<textarea  name="summary" class="form-control" rows="3"><?php echo htmlspecialchars( $results['article']->summary )?></textarea>
 							</div>
 
 							<div class="form-group">
 								<label>Тело статьи</label>
-								<textarea  name="content" class="form-control" rows="6">
-									<?php echo htmlspecialchars( $results['article']->content )?>
-								</textarea>
+								<textarea  name="content" class="form-control" rows="6"><?php echo htmlspecialchars( $results['article']->content )?></textarea>
 							</div>
 							<p>
 								<!-- <input type="submit" name="saveChanges" value="Save Changes" />

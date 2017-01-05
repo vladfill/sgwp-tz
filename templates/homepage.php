@@ -1,7 +1,6 @@
 <?php include "templates/include/header.php";?>
 
 <?php foreach ( $results['articles'] as $article ) { 
-
 	$date = $article->publicationDate;
 	?>
 
