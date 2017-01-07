@@ -33,6 +33,10 @@ class Article
   */
   public $content = null;
 
+  /**
+  * @var int количество просмотров поста
+  */
+  public $quantity = null;
 
   /**
   * Устанавливаем свойства с помощью значений в заданном массиве
@@ -41,11 +45,15 @@ class Article
   */
 
   public function __construct( $data=array() ) {
-    if ( isset( $data['id'] ) ) $this->id = (int) $data['id'];
-    if ( isset( $data['publicationDate'] ) ) $this->publicationDate = (int) $data['publicationDate'];
-    if ( isset( $data['title'] ) ) $this->title = $data['title'];
-    if ( isset( $data['summary'] ) ) $this->summary = $data['summary'];
-    if ( isset( $data['content'] ) ) $this->content = $data['content'];
+  	if ( isset( $data['id'] ) ) $this->id = (int) $data['id'];
+  	if ( isset( $data['publicationDate'] ) ) $this->publicationDate = (int) $data['publicationDate'];
+  	if ( isset( $data['title'] ) ) $this->title = $data['title'];
+  	if ( isset( $data['summary'] ) ) $this->summary = $data['summary'];
+  	if ( isset( $data['content'] ) ) $this->content = $data['content'];
+  	if ( isset( $data['content'] ) ) {
+  		$this->quantity = $data['quantity'];
+  		$this->quantity = ( $this->quantity !== null ) ? $this->quantity : 0;
+  	}
   }
 
 
@@ -58,17 +66,17 @@ class Article
   public function storeFormValues ( $params ) {
 
     // Сохраняем все параметры
-    $this->__construct( $params );
+  	$this->__construct( $params );
 
     // Разбираем и сохраняем дату публикации
-    if ( isset($params['publicationDate']) ) {
-      $publicationDate = explode ( '-', $params['publicationDate'] );
+  	if ( isset($params['publicationDate']) ) {
+  		$publicationDate = explode ( '-', $params['publicationDate'] );
 
-      if ( count($publicationDate) == 3 ) {
-        list ( $y, $m, $d ) = $publicationDate;
-        $this->publicationDate = mktime ( 0, 0, 0, $m, $d, $y );
-      }
-    }
+  		if ( count($publicationDate) == 3 ) {
+  			list ( $y, $m, $d ) = $publicationDate;
+  			$this->publicationDate = mktime ( 0, 0, 0, $m, $d, $y );
+  		}
+  	}
   }
 
 
@@ -80,14 +88,14 @@ class Article
   */
 
   public static function getById( $id ) {
-    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    $sql = "SELECT *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles WHERE id = :id";
-    $st = $conn->prepare( $sql );
-    $st->bindValue( ":id", $id, PDO::PARAM_INT );
-    $st->execute();
-    $row = $st->fetch();
-    $conn = null;
-    if ( $row ) return new Article( $row );
+  	$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+  	$sql = "SELECT *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles WHERE id = :id";
+  	$st = $conn->prepare( $sql );
+  	$st->bindValue( ":id", $id, PDO::PARAM_INT );
+  	$st->execute();
+  	$row = $st->fetch();
+  	$conn = null;
+  	if ( $row ) return new Article( $row );
   }
 
   /**
@@ -96,18 +104,18 @@ class Article
   * @return int|void 
   */
   public static function getNumPages(){
-    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    $sql = "SELECT id FROM articles";
-    $st = $conn->prepare( $sql );
-    $st->execute();
+  	$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+  	$sql = "SELECT id FROM articles";
+  	$st = $conn->prepare( $sql );
+  	$st->execute();
 
-    while ( $row = $st->fetch() ) {
-      $list[] = $row;
-    }
+  	while ( $row = $st->fetch() ) {
+  		$list[] = $row;
+  	}
 
-    $conn = null;
+  	$conn = null;
 
-    return count( $list );
+  	return count( $list );
   }
 
   /**
@@ -119,28 +127,28 @@ class Article
   */
 
   public static function getList( $numRows=100, $start=0, $order="publicationDate DESC" ) {
-    
 
-    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles
-            ORDER BY " . $order . " LIMIT :start, :numRows";
 
-    $st = $conn->prepare( $sql );
-    $st->bindValue( ":numRows", $numRows, PDO::PARAM_INT );
-    $st->bindValue( ":start", $start, PDO::PARAM_INT );
-    $st->execute();
-    $list = array();
+  	$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+  	$sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles
+  	ORDER BY " . $order . " LIMIT :start, :numRows";
 
-    while ( $row = $st->fetch() ) {
-      $article = new Article( $row );
-      $list[] = $article;
-    }
+  	$st = $conn->prepare( $sql );
+  	$st->bindValue( ":numRows", $numRows, PDO::PARAM_INT );
+  	$st->bindValue( ":start", $start, PDO::PARAM_INT );
+  	$st->execute();
+  	$list = array();
+
+  	while ( $row = $st->fetch() ) {
+  		$article = new Article( $row );
+  		$list[] = $article;
+  	}
 
     // Получаем общее количество статей, которые соответствуют критерию
-    $sql = "SELECT FOUND_ROWS() AS totalRows";
-    $totalRows = $conn->query( $sql )->fetch();
-    $conn = null;
-    return ( array ( "results" => $list, "totalRows" => $totalRows[0] ) );
+  	$sql = "SELECT FOUND_ROWS() AS totalRows";
+  	$totalRows = $conn->query( $sql )->fetch();
+  	$conn = null;
+  	return ( array ( "results" => $list, "totalRows" => $totalRows[0] ) );
   }
 
 
@@ -151,18 +159,18 @@ class Article
   public function insert() {
 
     // Есть у объекта статьи ID?
-    if ( !is_null( $this->id ) ) trigger_error ( "Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR );
+  	if ( !is_null( $this->id ) ) trigger_error ( "Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR );
 
     // Вставляем статью
-    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    $sql = "INSERT INTO articles ( title, summary, content ) VALUES ( :title, :summary, :content )";
-    $st = $conn->prepare ( $sql );
-    $st->bindValue( ":title", $this->title, PDO::PARAM_STR );
-    $st->bindValue( ":summary", $this->summary, PDO::PARAM_STR );
-    $st->bindValue( ":content", $this->content, PDO::PARAM_STR );
-    $st->execute();
-    $this->id = $conn->lastInsertId();
-    $conn = null;
+  	$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+  	$sql = "INSERT INTO articles ( title, summary, content ) VALUES ( :title, :summary, :content )";
+  	$st = $conn->prepare ( $sql );
+  	$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
+  	$st->bindValue( ":summary", $this->summary, PDO::PARAM_STR );
+  	$st->bindValue( ":content", $this->content, PDO::PARAM_STR );
+  	$st->execute();
+  	$this->id = $conn->lastInsertId();
+  	$conn = null;
   }
 
 
@@ -173,19 +181,18 @@ class Article
   public function update() {
 
     // Есть ли у объекта статьи ID?
-    if ( is_null( $this->id ) ) trigger_error ( "Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR );
-   
+  	if ( is_null( $this->id ) ) trigger_error ( "Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR );
+
     // Обновляем статью
-    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    $sql = "UPDATE articles SET title=:title, summary=:summary, content=:content WHERE id = :id";
-    $st = $conn->prepare ( $sql );
-    // $st->bindValue( ":publicationDate", $this->publicationDate, PDO::PARAM_INT );
-    $st->bindValue( ":title", $this->title, PDO::PARAM_STR );
-    $st->bindValue( ":summary", $this->summary, PDO::PARAM_STR );
-    $st->bindValue( ":content", $this->content, PDO::PARAM_STR );
-    $st->bindValue( ":id", $this->id, PDO::PARAM_INT );
-    $st->execute();
-    $conn = null;
+  	$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+  	$sql = "UPDATE articles SET title=:title, summary=:summary, content=:content WHERE id = :id";
+  	$st = $conn->prepare ( $sql );
+  	$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
+  	$st->bindValue( ":summary", $this->summary, PDO::PARAM_STR );
+  	$st->bindValue( ":content", $this->content, PDO::PARAM_STR );
+  	$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+  	$st->execute();
+  	$conn = null;
   }
 
 
@@ -196,16 +203,41 @@ class Article
   public function delete() {
 
     // Есть ли у объекта статьи ID?
-    if ( is_null( $this->id ) ) trigger_error ( "Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR );
+  	if ( is_null( $this->id ) ) trigger_error ( "Article::delete(): Attempt to delete an Article object that does not have its ID property set.", E_USER_ERROR );
 
     // Удаляем статью
-    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    $st = $conn->prepare ( "DELETE FROM articles WHERE id = :id LIMIT 1" );
-    $st->bindValue( ":id", $this->id, PDO::PARAM_INT );
-    $st->execute();
-    $conn = null;
+  	$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+  	$st = $conn->prepare ( "DELETE FROM articles WHERE id = :id LIMIT 1" );
+  	$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+  	$st->execute();
+  	$conn = null;
   }
 
-}
+	/**
+  * Увеличивает к-во просмотров
+  */
 
+	public static function incrWatchs($id){
+
+  	// Определяем значение по умолчанию
+		$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+		$sql = "SELECT quantity FROM articles WHERE id = :id";
+		$st = $conn->prepare( $sql );
+		$st->bindValue( ":id", $id, PDO::PARAM_INT );
+		$st->execute();
+		$quan = $st->fetch();
+
+		$int = ( $quan[0] !== null ) ? $quan[0] : 0;
+		++$int;
+		
+		$sql = "UPDATE articles SET quantity=:int WHERE id = :id ";
+		$sh = $conn->prepare( $sql );
+		$sh->bindValue( ":int", $int, PDO::PARAM_INT );
+		$sh->bindValue( ":id", $id, PDO::PARAM_INT );
+		$sh->execute();
+
+		$conn = null;
+	}
+
+}
 ?>

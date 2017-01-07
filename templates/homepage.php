@@ -1,4 +1,4 @@
-<?php include "templates/include/header.php";?>
+<?php include "templates/include/header.php"; ?>
 
 <?php foreach ( $results['articles'] as $article ) { 
 	$date = $article->publicationDate;
@@ -15,6 +15,9 @@
 			<span class="date">
 				<span class="month"><?php echo date('M', $date);?></span> 
 				<span class="day"><?php echo date('d', $date);?></span>
+				<ul class="stats">
+					<li><a href="#" class="icon fa-eye"><?php echo $article->quantity;?></a></li>
+				</ul>
 			</span>
 		</div>
 
