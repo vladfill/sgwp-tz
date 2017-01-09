@@ -1,12 +1,12 @@
 	<script src="admin-panel/js/jquery-1.11.1.min.js"></script>
 	<script src="admin-panel/js/bootstrap.min.js"></script>
-	<script src="admin-panel/js/chart.min.js"></script>
-	<script src="admin-panel/js/chart-data.js"></script>
-	<script src="admin-panel/js/easypiechart.js"></script>
-	<script src="admin-panel/js/easypiechart-data.js"></script>
-	<script src="admin-panel/js/bootstrap-datepicker.js"></script>
-	<script src="admin-panel/js/custom.js"></script>
-	<script>
+	<!-- <script src="admin-panel/js/chart.min.js"></script> -->
+	<!-- <script src="admin-panel/js/chart-data.js"></script> -->
+	<!-- <script src="admin-panel/js/easypiechart.js"></script> -->
+	<!-- <script src="admin-panel/js/easypiechart-data.js"></script> -->
+	<!-- <script src="admin-panel/js/bootstrap-datepicker.js"></script> -->
+	<!-- <script src="admin-panel/js/custom.js"></script> -->
+	<!-- <script>
 	window.onload = function(){ 
 		var chart1 = document.getElementById("line-chart").getContext("2d");
 		window.myLine = new Chart(chart1).Line(lineChartData, {
@@ -30,5 +30,5 @@
 		});
 		
 	};
-	</script>
+	</script> -->
 </body>
