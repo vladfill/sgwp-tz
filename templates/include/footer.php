@@ -10,9 +10,9 @@
 	<!-- Nav -->
 	<nav id="nav">
 		<ul>
-			<li><a href="index.php">Главная</a></li>
-			<li><a href="?action=about">Об авторе</a></li>
-			<li><a href="?action=contacts">Контакты</a></li>
+			<li data-nav='default'><a href="index.php">Главная</a></li>
+			<li data-nav='about'><a href="?action=about">Об авторе</a></li>
+			<li data-nav='contacts'><a href="?action=contacts">Контакты</a></li>
 		</ul>
 	</nav>
 
