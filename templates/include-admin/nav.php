@@ -18,7 +18,7 @@
 		<ul class="nav menu">
 			<li><a href="admin.php?action=newArticle"><span class="glyphicon glyphicon-pencil"></span> Добавить статью</a></li>
 			<li><a href="admin.php"><span class="glyphicon glyphicon-list-alt"></span> Статьи</a></li>
-			<li><a href="admin.php"><span class="glyphicon glyphicon-user"></span> Пользователи</a></li>
+			<li><a href="admin.php?action=users"><span class="glyphicon glyphicon-user"></span> Пользователи</a></li>
 			<li role="presentation" class="divider"></li>
 			<li><a href="admin.php?action=logout"><span class="glyphicon glyphicon-log-out"></span> Выход</a></li>
 		</ul>

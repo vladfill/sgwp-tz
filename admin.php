@@ -26,6 +26,10 @@ switch ( $action ) {
   case 'deleteArticle':
     deleteArticle();
     break;
+  case 'users':
+    // listUsers();
+    require('templates/admin/users.php');
+    break;
   default:
     listArticles();
 }
@@ -140,6 +144,9 @@ function deleteArticle() {
   header( "Location: admin.php?status=articleDeleted" );
 }
 
+function listUsers() {
+
+}
 
 function listArticles() {
   $results = array();
